@@ -1,8 +1,9 @@
 package ru.andrey.kvstorage.console;
 
-import jdk.jshell.EvalException;
 import ru.andrey.kvstorage.exception.DatabaseException;
 import ru.andrey.kvstorage.logic.Database;
+
+import java.util.Optional;
 
 public class UpdateKeyCommand implements DatabaseCommand {
 
@@ -16,9 +17,15 @@ public class UpdateKeyCommand implements DatabaseCommand {
 
     @Override
     public DatabaseCommandResult execute() throws DatabaseException {
-        // TODO check
-        Database database = env.getDatabase(databaseName).get();
-        database.write(tableName, key, value);
+        Optional<Database> database = env.getDatabase(databaseName);
+        if (database.isEmpty()) {
+            return DatabaseCommandResult.error("No database with name " + databaseName);
+        }
+        try {
+            database.get().write(tableName, key, value);
+        } catch (DatabaseException exception) {
+            return DatabaseCommandResult.error(exception.getMessage());
+        }
         return DatabaseCommandResult.success(null);
     }
 

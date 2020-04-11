@@ -37,12 +37,12 @@ public interface DatabaseCommandResult {
         }
 
         @Override
-        public boolean isSuccess(){
+        public boolean isSuccess() {
             return this.status == DatabaseCommandStatus.SUCCESS;
         }
 
         @Override
-        public String getErrorMessage(){
+        public String getErrorMessage() {
             return this.message;
         }
 

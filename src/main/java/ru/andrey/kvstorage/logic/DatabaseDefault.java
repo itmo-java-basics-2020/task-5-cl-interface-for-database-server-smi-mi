@@ -15,7 +15,6 @@ public class DatabaseDefault implements Database {
 
     @Override
     public void createTableIfNotExists(String tableName) throws DatabaseException {
-
     }
 
     @Override

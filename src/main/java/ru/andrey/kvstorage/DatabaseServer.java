@@ -19,6 +19,9 @@ public class DatabaseServer {
     }
 
     DatabaseCommandResult executeNextCommand(String commandText) {
+        if (commandText == null) {
+            return DatabaseCommandResult.error("Command text must not be null.");
+        }
         String[] commandWithArgs = commandText.split(" ");
         String commandName = commandWithArgs[0];
 
@@ -26,12 +29,8 @@ public class DatabaseServer {
             DatabaseCommands commandType = DatabaseCommands.valueOf(commandName);
             DatabaseCommand command = commandType.getCommand(env, commandWithArgs);
             return command.execute();
-        } catch (IllegalArgumentException exception) {
-            // TODO handle exception
-            return null;
-        } catch (DatabaseException exception) {
-            // TODO handle exception
-            return null;
+        } catch (IllegalArgumentException | DatabaseException exception) {
+            return DatabaseCommandResult.error(exception.getMessage());
         }
     }
 }
