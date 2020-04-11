@@ -6,6 +6,10 @@ import ru.andrey.kvstorage.logic.Database;
 import java.util.Optional;
 
 public class ReadKeyCommand implements DatabaseCommand {
+    private final ExecutionEnvironment env;
+    private final String databaseName;
+    private final String tableName;
+    private final String key;
 
     public ReadKeyCommand(ExecutionEnvironment env, String databaseName, String tableName, String key) {
         this.env = env;
@@ -28,9 +32,4 @@ public class ReadKeyCommand implements DatabaseCommand {
         }
         return DatabaseCommandResult.success(value);
     }
-
-    private final ExecutionEnvironment env;
-    private String databaseName;
-    private String tableName;
-    private String key;
 }

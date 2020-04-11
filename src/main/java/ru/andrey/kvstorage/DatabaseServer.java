@@ -19,8 +19,8 @@ public class DatabaseServer {
     }
 
     DatabaseCommandResult executeNextCommand(String commandText) {
-        if (commandText == null) {
-            return DatabaseCommandResult.error("Command text must not be null.");
+        if (commandText == null || commandText.isBlank()) {
+            return DatabaseCommandResult.error("Command text must not be null or blank.");
         }
         String[] commandWithArgs = commandText.split(" ");
         String commandName = commandWithArgs[0];
@@ -29,7 +29,7 @@ public class DatabaseServer {
             DatabaseCommands commandType = DatabaseCommands.valueOf(commandName);
             DatabaseCommand command = commandType.getCommand(env, commandWithArgs);
             return command.execute();
-        } catch (IllegalArgumentException | DatabaseException exception) {
+        } catch (Exception exception) {
             return DatabaseCommandResult.error(exception.getMessage());
         }
     }

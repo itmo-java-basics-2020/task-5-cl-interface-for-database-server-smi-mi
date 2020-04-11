@@ -6,6 +6,9 @@ import ru.andrey.kvstorage.logic.Database;
 import java.util.Optional;
 
 public class CreateTableCommand implements DatabaseCommand {
+    private final ExecutionEnvironment env;
+    private final String databaseName;
+    private final String tableName;
 
     public CreateTableCommand(ExecutionEnvironment env, String databaseName, String tableName) {
         this.env = env;
@@ -24,10 +27,7 @@ public class CreateTableCommand implements DatabaseCommand {
         } catch (DatabaseException exception) {
             return DatabaseCommandResult.error(exception.getMessage());
         }
-        return DatabaseCommandResult.success(null);
+        return DatabaseCommandResult.success("Table " + tableName +
+                " in database " + databaseName + " was created successfully.");
     }
-
-    private final ExecutionEnvironment env;
-    private String databaseName;
-    private String tableName;
 }

@@ -6,6 +6,11 @@ import ru.andrey.kvstorage.logic.Database;
 import java.util.Optional;
 
 public class UpdateKeyCommand implements DatabaseCommand {
+    private final ExecutionEnvironment env;
+    private final String databaseName;
+    private final String tableName;
+    private final String key;
+    private final String value;
 
     public UpdateKeyCommand(ExecutionEnvironment env, String databaseName, String tableName, String key, String value) {
         this.env = env;
@@ -26,12 +31,7 @@ public class UpdateKeyCommand implements DatabaseCommand {
         } catch (DatabaseException exception) {
             return DatabaseCommandResult.error(exception.getMessage());
         }
-        return DatabaseCommandResult.success(null);
+        return DatabaseCommandResult.success("Key " + key + " in table " + tableName +
+                " in database " + databaseName + " was updated successfully with value " + value);
     }
-
-    private final ExecutionEnvironment env;
-    private String databaseName;
-    private String tableName;
-    private String key;
-    private String value;
 }

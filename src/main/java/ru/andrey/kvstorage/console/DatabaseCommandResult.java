@@ -25,6 +25,15 @@ public interface DatabaseCommandResult {
     }
 
     class DatabaseCommandResultDefault implements DatabaseCommandResult {
+        private final DatabaseCommandStatus status;
+        private final String result;
+        private final String message;
+
+        private DatabaseCommandResultDefault(DatabaseCommandStatus status, String result, String message) {
+            this.status = status;
+            this.result = result;
+            this.message = message;
+        }
 
         @Override
         public Optional<String> getResult() {
@@ -45,15 +54,5 @@ public interface DatabaseCommandResult {
         public String getErrorMessage() {
             return this.message;
         }
-
-        private DatabaseCommandResultDefault(DatabaseCommandStatus status, String result, String message) {
-            this.status = status;
-            this.result = result;
-            this.message = message;
-        }
-
-        private DatabaseCommandStatus status;
-        private String result;
-        private String message;
     }
 }
